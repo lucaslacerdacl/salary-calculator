@@ -2,7 +2,7 @@
 
 # Salary Calculator &middot; [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build status](https://dev.azure.com/lucaslacerdacl/salary-calculator/_apis/build/status/salary-calculator)](https://dev.azure.com/lucaslacerdacl/salary-calculator/_build/latest?definitionId=-1) [![codecov](https://codecov.io/gh/lucaslacerdacl/salary-calculator/branch/master/graph/badge.svg?token=UVMzsNr6HU)](https://codecov.io/gh/lucaslacerdacl/salary-calculator)
 
-> An algorithm to calculate salary.
+> An algorithm to calculate estimate salary.
 
 
 ### Usage
