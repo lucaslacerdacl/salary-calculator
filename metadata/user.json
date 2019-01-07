@@ -1,0 +1,23 @@
+{
+  "name": "Peter Parker",
+  "address": {
+    "street": "Av. Brasil",
+    "number": "1877",
+    "neightborhood": "Savassi",
+    "city": "Belo Horizonte",
+    "state": "Minas Gerais",
+    "zipCode": "30140001"
+  },
+  "carKilometersPerLiter": 10,
+  "gasolinePrice": 4.79,
+  "expense": [
+    {
+      "name": "Gym",
+      "value": 79.90
+    },
+    {
+      "name": "Lunch",
+      "value": 800
+    }
+  ]
+}

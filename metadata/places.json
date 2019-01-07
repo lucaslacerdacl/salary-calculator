@@ -1,0 +1,26 @@
+{
+  "places": [
+    {
+      "name": "Work",
+      "address": {
+        "street": "Av. Getúlio Vargas",
+        "number": "291",
+        "neightborhood": "Funcionários",
+        "city": "Belo Horizonte",
+        "state": "Minas Gerais",
+        "zipCode": "30130160"
+      }
+    },
+    {
+      "name": "College",
+      "address": {
+        "street": "Avenida Presidente Antônio Carlos",
+        "number": "6627",
+        "neightborhood": "Pampulha",
+        "city": "Belo Horizonte",
+        "state": "Minas Gerais",
+        "zipCode": "31270901"
+      }
+    }
+  ]
+}
