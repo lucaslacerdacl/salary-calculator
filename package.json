@@ -1,0 +1,52 @@
+{
+  "name": "salary-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc --outDir bin",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "test": "jest --coverage",
+    "salary": "npm run build && node bin/index.js"
+  },
+  "googleApiKey": "INSERT_API_KEY",
+  "bin": {
+    "cpm": "bin/index.js"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "roots": [
+      "src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/index.ts",
+      "!src/models/*.ts"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucaslacerdacl/salary-calculator.git"
+  },
+  "keywords": [],
+  "author": "Lucas Leandro Costa Lacerda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucaslacerdacl/salary-calculator/issues"
+  },
+  "homepage": "https://github.com/lucaslacerdacl/salary-calculator#readme",
+  "devDependencies": {
+    "@types/jest": "^23.3.6",
+    "@types/lodash": "^4.14.119",
+    "@types/node": "^10.11.7",
+    "codecov": "^3.1.0",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2",
+    "typings": "^2.1.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "lodash": "^4.17.11"
+  }
+}
