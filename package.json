@@ -6,6 +6,7 @@
     "build": "tsc --outDir bin",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "test": "jest --coverage",
+    "codecov": "codecov -t bad9d260-e3f3-4c89-9260-588f7fa39893",
     "salary": "npm run build && node bin/index.js"
   },
   "googleApiKey": "INSERT_API_KEY",
