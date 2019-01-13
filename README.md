@@ -9,7 +9,7 @@
 
 Insert your Google API key in the property ```googleApiKey``` in the ```package.json``` file.
 
-Inside the folder metadata you will replace the ```user.json``` file with your informations. Here is an exemple:
+Inside the folder metadata you will replace the ```user.json``` file with your informations. You can set the ```vehicle``` property with ```car``` or ````bus```. Here is an exemple:
 
 ```json
 {
@@ -22,8 +22,7 @@ Inside the folder metadata you will replace the ```user.json``` file with your i
     "state": "Minas Gerais",
     "zipCode": "30140001"
   },
-  "carKilometersPerLiter": 10,
-  "gasolinePrice": 4.79,
+  "vehicle": "car",
   "expense": [
     {
       "name": "Gym",
@@ -34,6 +33,21 @@ Inside the folder metadata you will replace the ```user.json``` file with your i
       "value": 800
     }
   ]
+}
+```
+
+If you choose car you have to configure the ```car.json``` file:
+```json
+{
+  "carKilometersPerLiter": 10,
+  "gasolinePrice": 4.79
+}
+```
+
+If you choose bus you have to configure the ```bus.json``` file:
+```json
+{
+  "fare": 4.25
 }
 ```
 

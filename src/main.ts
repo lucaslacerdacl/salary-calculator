@@ -5,6 +5,8 @@ import ExpenseModel from './models/expense.model';
 import * as _ from 'lodash';
 import ITrajectory from './api/trajectory/interfaces/trajectory.interface';
 import AddressModel from './models/address.model';
+import CarModel from './models/vehicle.car.model';
+import BusModel from './models/vehicle.bus.model';
 
 
 export default class Main {
@@ -16,8 +18,7 @@ export default class Main {
     const formatedFile = JSON.parse(file.toString());
     return new UserModel(formatedFile.name,
       formatedFile.address,
-      formatedFile.carKilometersPerLiter,
-      formatedFile.gasolinePrice,
+      formatedFile.vehicle,
       formatedFile.expense);
   }
 
@@ -29,6 +30,18 @@ export default class Main {
       places.push(new PlaceModel(place.name, place.address));
     }));
     return places;
+  }
+
+  private getCar(): CarModel {
+    const file = fs.readFileSync('metadata/car.json');
+    const formatedFile = JSON.parse(file.toString());
+    return new CarModel(formatedFile.kilometersPerLiter, formatedFile.gasolinePrice);
+  }
+
+  private getBus(): BusModel {
+    const file = fs.readFileSync('metadata/bus.json');
+    const formatedFile = JSON.parse(file.toString());
+    return new BusModel(formatedFile.fare);
   }
 
   private calculatePersonalExpenses(expenses: Array<ExpenseModel>): number {
@@ -55,20 +68,39 @@ export default class Main {
     return await this._ITrajectory.getDistance(_.last(destinations).address, home);
   }
 
-  private async calculateGasolineExpenses(user: UserModel, destinations: Array<PlaceModel>): Promise<number> {
+  private async calculateTrajectoryDistance(home: AddressModel, destinations: Array<PlaceModel>): Promise<number> {
     let trajectoryTotalDistance = 0;
-    trajectoryTotalDistance += await this.getFirstDestinationDistance(user.address, destinations);
+    trajectoryTotalDistance += await this.getFirstDestinationDistance(home, destinations);
     trajectoryTotalDistance += await this.getDistanceBetweenDestinations(destinations);
-    trajectoryTotalDistance += await this.getLastDestinationAddress(user.address, destinations);
-    const kilometersInCar = trajectoryTotalDistance / user.carKilometersPerLiter;
-    return kilometersInCar * user.gasolinePrice * 30;
+    trajectoryTotalDistance += await this.getLastDestinationAddress(home, destinations);
+    return trajectoryTotalDistance;
+  }
+
+  private calculateBusExpenses(bus: BusModel, destinations: Array<PlaceModel>): number {
+    return (destinations.length + 2) * bus.fare * 30;
+  }
+
+  private async calculateCarExpenses(home: AddressModel, car: CarModel, destinations: Array<PlaceModel>): Promise<number> {
+    const distance = await this.calculateTrajectoryDistance(home, destinations);
+    const kilometersInCar = distance / car.kilometersPerLiter;
+    return kilometersInCar * car.gasolinePrice * 30;
+  }
+
+  private async getTrajectoryExpenses(user: UserModel, destinations: Array<PlaceModel>): Promise<number> {
+    if (user.vehicle === UserModel.CAR) {
+      return await this.calculateCarExpenses(user.address, this.getCar(), destinations);
+    } else if (user.vehicle === UserModel.BUS) {
+      return await this.calculateBusExpenses(this.getBus(), destinations);
+    } else {
+      return 0;
+    }
   }
 
   public async calculateSalary(): Promise<number> {
     const user: UserModel = this.getUser();
     const places: Array<PlaceModel> = this.getPlaces();
     const expensesTotal = this.calculatePersonalExpenses(user.expense);
-    const trajectoryTotal = await this.calculateGasolineExpenses(user, places);
+    const trajectoryTotal = await this.getTrajectoryExpenses(user, places);
     return parseFloat((expensesTotal + trajectoryTotal).toFixed(2));
   }
 
